@@ -1,0 +1,290 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Español (México) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ESM)
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MEXICAN
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_LOGIN DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CliniFaQ - Login"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Bienvenido a CliniFaQ",IDC_STATIC,113,7,70,8
+    PUSHBUTTON      "Iniciar Sesion",IDC_LOGIN,127,103,50,14
+    PUSHBUTTON      "Registrarse",IDC_REGISTER,129,143,50,14
+    EDITTEXT        IDC_USERKEY,102,41,101,14,ES_AUTOHSCROLL
+    LTEXT           "Clave de Usuario",IDC_STATIC,125,31,55,8
+    LTEXT           "Contraseña",IDC_STATIC,133,63,38,8
+    LTEXT           "¿Eres nuevo? Registrate gratis",IDC_STATIC,105,132,99,8
+    EDITTEXT        IDC_PASSWORD,101,74,102,14,ES_PASSWORD | ES_AUTOHSCROLL
+END
+
+IDD_REGUSER DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CliniFaQ - Registro de Usuario"
+MENU IDR_MENU1
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Aceptar",IDOK,198,155,50,14
+    PUSHBUTTON      "Cancelar",IDCANCEL,252,155,50,14
+    LTEXT           "INGRESA LOS SIGUIENTES DATOS",IDC_STATIC,101,7,111,8
+    LTEXT           "Clave de usuario",IDC_STATIC,67,22,54,8
+    LTEXT           "Contraseña",IDC_STATIC,83,42,38,8
+    LTEXT           "Apellido Paterno",IDC_STATIC,69,62,53,8
+    LTEXT           "Apellido Materno",IDC_STATIC,67,84,54,8
+    LTEXT           "Nombre(s)",IDC_STATIC,88,104,34,8
+    EDITTEXT        IDC_USERKER,130,20,107,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PASSWORR,131,40,106,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_APATERNR,131,60,106,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_AMATERNR,131,81,105,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOMBRER,130,101,106,14,ES_AUTOHSCROLL
+END
+
+IDD_REGCARNET DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+MENU IDR_MENU1
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Aceptar",IDOK,198,155,50,14
+    PUSHBUTTON      "Cancelar",IDCANCEL,252,155,50,14
+END
+
+IDD_REGPERSONA DIALOGEX 0, 0, 463, 270
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CliniFaQ - Registro de Personas"
+MENU IDR_MENU1
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Aceptar",IDOP,351,249,50,14
+    PUSHBUTTON      "Cancelar",IDCANCEP,406,249,50,14
+    LTEXT           "Apellido Paterno",IDC_STATIC,15,7,53,8
+    LTEXT           "Apellido Materno",IDC_STATIC,17,37,54,8
+    LTEXT           "Nombre(s)",IDC_STATIC,17,66,34,8
+    LTEXT           "CURP",IDC_STATIC,17,97,19,8
+    LTEXT           "RFC",IDC_STATIC,17,126,14,8
+    LTEXT           "Fecha de nacimiento(DD/MM/YYYY)",IDC_STATIC,17,156,113,8
+    LTEXT           "Calle",IDC_STATIC,17,185,16,8
+    LTEXT           "Colonia",IDC_STATIC,18,216,24,8
+    LTEXT           "Ciudad",IDC_STATIC,161,7,23,8
+    LTEXT           "Estado",IDC_STATIC,160,37,23,8
+    LTEXT           "Estado Civil",IDC_STATIC,159,68,38,8
+    LTEXT           "Telefono",IDC_STATIC,160,96,29,8
+    LTEXT           "Documento de identidad (INE, Pasaporte, Licencia,",IDC_STATIC,161,128,164,8
+    LTEXT           "Cartilla Militar, Cartilla de Vacunacion, etc.)",IDC_STATIC,161,141,138,8
+    LTEXT           "Sexo",IDC_STATIC,163,171,17,8
+    LTEXT           "Grupo Ocupacional",IDC_STATIC,161,200,61,8
+    LTEXT           "Perfil de riesgo",IDC_STATIC,162,228,48,8
+    EDITTEXT        IDC_APATERNP,15,19,114,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_AMATERNP,16,48,113,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOMBREP,18,78,111,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CURPP,17,109,114,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_DATETIMEPICKERP,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,24,168,100,15
+    EDITTEXT        IDC_RFCP,17,138,113,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CALLP,17,197,114,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_COLONIP,20,228,110,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CITYP,156,20,118,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ESTADP,158,48,116,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ESTACIVIP,158,78,115,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TELEFP,160,108,62,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_IDENTIFP1,159,151,109,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_SEXP,161,183,134,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_GRUOCUP,164,211,126,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PERRIEP,164,241,128,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_IDENTIFP3,"Static",SS_BITMAP,285,20,20,20
+    PUSHBUTTON      "Seleccionar",IDC_IDENTIFP2,274,151,50,14
+END
+
+IDD_REGVACUNA DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "CliniFaQ - Registrar Vacuna"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Aceptar",IDOV,198,155,50,14
+    PUSHBUTTON      "Cancelar",IDCANCEV,252,155,50,14
+    LTEXT           "Estático",IDC_STATIC,143,7,26,8
+    LTEXT           "Tipo de Vacuna",IDC_STATIC,33,23,50,8
+    LTEXT           "Marca",IDC_STATIC,61,41,20,8
+    LTEXT           "N° de dosis",IDC_STATIC,45,58,37,8
+    LTEXT           "Clave de vacuna",IDC_STATIC,29,76,54,8
+    LTEXT           "Descripcion",IDC_STATIC,44,94,37,8
+    LTEXT           "Precio de compra",IDC_STATIC,27,143,56,8
+    EDITTEXT        IDC_TIPOVAC,89,20,116,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MARCAVAC,89,38,115,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_NOMDOS,89,56,116,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CLAVAC,89,74,114,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DESCVAC,89,91,204,46,ES_MULTILINE | ES_AUTOHSCROLL
+    EDITTEXT        IDC_PREVAC,90,140,111,14,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_LOGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_REGUSER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_REGCARNET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_REGPERSONA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 456
+        VERTGUIDE, 184
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 263
+    END
+
+    IDD_REGVACUNA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_LOGIN AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REGUSER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REGCARNET AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REGPERSONA AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REGVACUNA AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU
+BEGIN
+    POPUP "Carnet"
+    BEGIN
+        MENUITEM "Registrar Carnet",            ID_CARNET_REGISTRARCARNET
+    END
+    POPUP "Vacuna"
+    BEGIN
+        MENUITEM "Registrar Vacuna",            ID_VACUNA_AGREGARVACUNA
+    END
+    POPUP "Persona"
+    BEGIN
+        MENUITEM "Registrar Persona",           ID_PERSONA_REGISTRARPERSONA
+    END
+    POPUP "Acerca de"
+    BEGIN
+        MENUITEM "Manual de Usuario",           ID_ACERCADE_MANUALDEUSUARIO
+        MENUITEM "Salir",                       ID_ACERCADE_SALIR
+    END
+END
+
+#endif    // Español (México) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
