@@ -87,14 +87,6 @@ void modCarnet(CARNET* carnetmod, char krnetmod[5000]);
 void regUser(USER* nuevo);
 void regPersona(PERSONA* nuevo);
 void regVacuna(VACUNA* nuevo);
-void writeCarnetBinary();
-void readCarnetBinary();
-void writeUserBinary();
-void readUserBinary();
-void writePersonBinary();
-void readPersonBinary();
-void writeVacunaBinary();
-void readVacunaBinary();
 void menu1(WPARAM wParam, HWND hWnd);
 BOOL CALLBACK vLogin(HWND hWNd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL CALLBACK vRegUser(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -117,9 +109,6 @@ int func = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
     hInstGlobal = hInstance;
-    readCarnetBinary();
-    readUserBinary();
-    readPersonBinary();
     auxu = iniciu;
 
     hWndLogin = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_LOGIN), 0, vLogin);
@@ -236,8 +225,6 @@ BOOL CALLBACK vRegUser(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
                     delete registru;
 
-                    writeUserBinary();
-
                     MessageBox(hWnd, "Usuario Registrado", "AVISO", MB_OK | MB_ICONINFORMATION);
 
                 }break;
@@ -249,7 +236,7 @@ BOOL CALLBACK vRegUser(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         ShowWindow(hWndLogin, SW_SHOW);
                     }
                     else if (ventRegis == 2) {
-                        int opc = MessageBox(hWnd, "Segur que deseas salir?", "AVISO", MB_YESNO | MB_ICONQUESTION);
+                        int opc = MessageBox(hWnd, "Seguro que deseas salir?", "AVISO", MB_YESNO | MB_ICONQUESTION);
 
                         switch (opc) {
                         case IDYES:
@@ -354,8 +341,6 @@ BOOL CALLBACK vRegPersona(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
                     delete registrp;
 
-                    writePersonBinary();
-
                     MessageBox(hWnd, "Persona Registrada", "AVISO", MB_OK | MB_ICONINFORMATION);
 
                 }break;
@@ -455,7 +440,6 @@ BOOL CALLBACK vRegVacuna(HWND hWNd, UINT msg, WPARAM wParam, LPARAM lParam) {
             GetDlgItemText(hWNd, IDC_PREVAC, vcuna->vacprize, 5);
 
             regVacuna(registrv);
-            writeVacunaBinary();
 
             MessageBox(hWnd, "Vacuna registrada", "AVISO", MB_OK | MB_ICONINFORMATION);
 
