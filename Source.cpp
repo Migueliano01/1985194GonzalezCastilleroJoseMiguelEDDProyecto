@@ -86,8 +86,6 @@ VACUNA* registrv = nullptr;
 void regCarnet(CARNET* nuevo);
 void delCarnet(CARNET* auxc);
 void modCarnet(CARNET* carnetmod);
-void searCarnet();
-void searCarnet2();
 void regUser(USER* nuevo);
 void regPersona(PERSONA* nuevo);
 void regVacuna(VACUNA* nuevo);
@@ -124,12 +122,9 @@ HWND hWndVacuna;
 
 WNDPROC lpEditWndProc;
 
-int ventRegis = 1;
-
 int func = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
-    readUser();
     hInstGlobal = hInstance;
     auxu = iniciu;
 
@@ -161,6 +156,7 @@ BOOL CALLBACK vLogin(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         }break;
 
         case WM_COMMAND: {
+            readUser();
 
             switch (LOWORD(wParam)) {
             case IDC_LOGIN: {
@@ -287,6 +283,13 @@ BOOL CALLBACK vRegCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
         case WM_INITDIALOG: {
             DestroyWindow(hWnd);
+
+            int numcar;
+            srand(time(NULL));
+
+            numcar = rand() % 1000000;
+
+            SetDlgItemInt(hWnd, IDC_NUMCAR, numcar, FALSE);
         }break;
 
         case WM_COMMAND: {
@@ -297,7 +300,7 @@ BOOL CALLBACK vRegCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                 case IDORC: {
                     CARNET* registrc = new CARNET;
                     writeCarnet();
-                    int numcarnet = rand();
+
                     GetDlgItemText(hWnd, IDC_NUMCAR, (LPWSTR)s2ws(numcar).c_str(), 10);
                     registrc->numcarnet = atoi(numcar);
                     GetDlgItemText(hWnd, IDC_CURPAT, (LPWSTR)s2ws(registrc->persocurp).c_str(), 16);
@@ -310,16 +313,15 @@ BOOL CALLBACK vRegCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     strcpy_s(registrc->fechadosis.ano, "");
 
                     regCarnet(registrc);
+                    writeCarnet();
 
                     delete registrc;
 
                     MessageBox(hWnd, L"Carnet registrado", L"AVISO", MB_OK | MB_ICONINFORMATION);
-
-                    delete registrc;
                 }break;
 
                 case IDCANCERC: {
-                    int opc;
+                    int opc{};
                     MessageBox(hWnd, L"Seguro que desea salir?", L"AVISO", MB_YESNO | MB_ICONQUESTION);
 
                     switch (opc) {
@@ -339,7 +341,7 @@ BOOL CALLBACK vRegCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 BOOL CALLBACK vDelCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     hWndDelCarnet = hWnd;
     char deldate[16] = { 0 };
-    SYSTEMTIME fechadosis;
+    SYSTEMTIME fechadosis{};
     switch (msg) {
 
         case WM_INITDIALOG: {
@@ -349,6 +351,7 @@ BOOL CALLBACK vDelCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         case WM_COMMAND: {
             menu1(wParam, hWnd);
             switch (LOWORD(wParam)) {
+                readCarnet();
 
                 char seardelcar[100];
                 char carfecha[16];
@@ -369,12 +372,12 @@ BOOL CALLBACK vDelCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         SetDlgItemText(hWnd, IDC_EMARVAC, (LPWSTR)s2ws(auxc->vacuna).c_str());
                         SetDlgItemText(hWnd, IDC_ENUMDOS, (LPWSTR)s2ws(auxc->dosis).c_str());
 
-                        strcat_s(deldate, auxc->fechadosis.dia);
-                        strcat_s(deldate, "%d");
-                        strcat_s(deldate, auxc->fechadosis.mes);
-                        strcat_s(deldate, "%d");
-                        strcat_s(deldate, auxc->fechadosis.ano);
-                        SetDlgItemText(hWnd, IDC_EFECDOS, (LPWSTR)s2ws(auxc->fechadosis).c_str());
+                        strcat_s(carfecha, auxc->fechadosis.dia);
+                        strcat_s(carfecha, "%d");
+                        strcat_s(carfecha, auxc->fechadosis.mes);
+                        strcat_s(carfecha, "%d");
+                        strcat_s(carfecha, auxc->fechadosis.ano);
+                        SetDlgItemText(hWnd, IDC_EFECDOS, (LPWSTR)s2ws(carfecha).c_str());
 
                         SetDlgItemText(hWnd, IDC_ELOTE, (LPWSTR)s2ws(auxc->lote).c_str());
                         SetDlgItemText(hWnd, IDC_ECENVAC, (LPWSTR)s2ws(auxc->vacunacenter).c_str());
@@ -386,13 +389,13 @@ BOOL CALLBACK vDelCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     int opc = MessageBox(0, L"Seguro que desea eliminar el carnet?", L"AVISO", MB_YESNO | MB_ICONQUESTION);
                     if (opc == IDYES) {
                         delCarnet(auxc);
-                        writeCarnet();
                         SetWindowText(GetDlgItem(hWnd, IDC_EDCURPAT), L"");
                         SetWindowText(GetDlgItem(hWnd, IDC_EMARVAC), L"");
                         SetWindowText(GetDlgItem(hWnd, IDC_ENUMDOS), L"");
                         SetWindowText(GetDlgItem(hWnd, IDC_EFECDOS), L"");
                         SetWindowText(GetDlgItem(hWnd, IDC_ELOTE), L"");
                         SetWindowText(GetDlgItem(hWnd, IDC_ECENVAC), L"");
+                        writeCarnet();
                         EnableWindow(GetDlgItem(hWnd, IDOD), FALSE);
                     }
                 }break;
@@ -413,7 +416,7 @@ BOOL CALLBACK vDelCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 BOOL CALLBACK vModCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     hWndModCarnet = hWnd;
-    SYSTEMTIME fechadosis;
+    SYSTEMTIME fechadosis{};
     switch (msg) {
 
         case WM_INITDIALOG: {
@@ -459,9 +462,9 @@ BOOL CALLBACK vModCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                         GetDlgItemText(hWnd, IDC_MMARVAC, (LPWSTR)s2ws(auxc->vacuna).c_str(), 20);
                         GetDlgItemText(hWnd, IDC_MNUMDOS, (LPWSTR)s2ws(auxc->dosis).c_str(), 20);
                         SendDlgItemMessage(hWnd, IDC_MFECDOS, DTM_GETSYSTEMTIME, 0, (LPARAM)&date);
-                        sprintf(auxc->fechadosis.dia, "%d", date.wDay);
-                        sprintf(auxc->fechadosis.mes, "%d", date.wMonth);
-                        sprintf(auxc->fechadosis.ano, "%d", date.wYear);
+                        sprintf_s(auxc->fechadosis.dia, "%d", date.wDay);
+                        sprintf_s(auxc->fechadosis.mes, "%d", date.wMonth);
+                        sprintf_s(auxc->fechadosis.ano, "%d", date.wYear);
                         GetDlgItemText(hWnd, IDC_MLOTE, (LPWSTR)s2ws(auxc->lote).c_str(), 10);
                         GetDlgItemText(hWnd, IDC_MCENVAC, (LPWSTR)s2ws(auxc->vacunacenter).c_str(), 50);
 
@@ -488,7 +491,7 @@ BOOL CALLBACK vModCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 BOOL CALLBACK vSearCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-    SYSTEMTIME DateFileCarnet;
+    SYSTEMTIME DateFileCarnet{};
     switch (msg) {
 
         case WM_INITDIALOG: {
@@ -556,7 +559,7 @@ BOOL CALLBACK vSearCarnet(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 
 BOOL CALLBACK vSearCarnet2(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-    SYSTEMTIME DateFileCarnet;
+    SYSTEMTIME DateFileCarnet{};
     switch (msg) {
 
         case WM_INITDIALOG: {
@@ -592,42 +595,30 @@ BOOL CALLBACK vSearCarnet2(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     char searcar[100];
                     GetDlgItemText(hWnd, IDC_B2NUMCAR, (LPWSTR)s2ws(searcar).c_str(), 100);
 
-                    CARNET* buscarCarnetEnArchivo(string persocurp); {
-                        ifstream carnetfile;
-                        carnetfile.open("file.txt", ios::binary | ios::in);
-                        bool encontrado = false;
-                        CARNET* krnet = new CARNET;
-                        if (carnetfile.is_open()) {
-                            //get length of file:
-                            carnetfile.seekg(0, carnetfile.end);
-                            int length = carnetfile.tellg();
-                            carnetfile.seekg(0, carnetfile.beg);
-                            int bytes = 0;
-                            while (bytes <= length) {
-                                char persocurp[16];
-                                carnetfile.read((char*)krnet, sizeof(krnet));
-                                if (strcmpi(krnet->persocurp, (LPWSTR)s2ws(persocurp).c_str())) {
-                                    encontrado = true;
-                                    break;
-                                }
-                                bytes += sizeof(CARNET);
-                            }
+                    readCarnet();
 
-                            if (!encontrado) {
-                                delete krnet;
-                                krnet = NULL;
-                            }
-                            carnetfile.close();
+                    auxc = inicic;
+                    while (auxc != nullptr && strcmp(searcar, auxc->persocurp) != 0) {
+                        auxc = auxc->sig;
+                    }
+                    if (auxc == nullptr) {
+                        MessageBox(0, L"Carnet NO Encontrado", L"AVISO", MB_OK | MB_ICONWARNING);
+                    }
+                    else {
+                        if (strcmp(auxc->persocurp, searcar) == 0) {
+                            MessageBox(0, L"Carnet Encontrado", L"AVISO", MB_OK | MB_ICONINFORMATION);
+                            SetDlgItemInt(hWnd, IDC_BNUMCA, auxc->numcarnet, FALSE);
+                            SetDlgItemText(hWnd, IDC_BCURPPAT, (LPWSTR)s2ws(auxc->persocurp).c_str());
+                            SetDlgItemText(hWnd, IDC_BVACUNA, (LPWSTR)s2ws(auxc->vacuna).c_str());
+                            SetDlgItemText(hWnd, IDC_BDOSIS, (LPWSTR)s2ws(auxc->dosis).c_str());
+                            SetDlgItemText(hWnd, IDC_BLOT, (LPWSTR)s2ws(auxc->lote).c_str());
+                            SetDlgItemText(hWnd, IDC_BVACCEN, (LPWSTR)s2ws(auxc->vacunacenter).c_str());
+                            EnableWindow(GetDlgItem(hWnd, IDOB2), TRUE);
+                        }
+                        else {
+                            MessageBox(0, L"Carnet No Encontrado", L"AVISO", MB_OK | MB_ICONWARNING);
                         }
                     }
- 
-                    MessageBox(0, L"Carnet Encontrado", L"AVISO", MB_OK | MB_ICONINFORMATION);
-                    SetDlgItemInt(hWnd, IDC_BNUMCA, auxc->numcarnet, FALSE);
-                    SetDlgItemText(hWnd, IDC_BCURPPAT, (LPWSTR)s2ws(auxc->persocurp).c_str());
-                    SetDlgItemText(hWnd, IDC_BVACUNA, (LPWSTR)s2ws(auxc->vacuna).c_str());
-                    SetDlgItemText(hWnd, IDC_BDOSIS, (LPWSTR)s2ws(auxc->dosis).c_str());
-                    SetDlgItemText(hWnd, IDC_BLOT, (LPWSTR)s2ws(auxc->lote).c_str());
-                    SetDlgItemText(hWnd, IDC_BVACCEN, (LPWSTR)s2ws(auxc->vacunacenter).c_str());
                 }break;
             }
         }break;
@@ -643,8 +634,8 @@ BOOL CALLBACK vSearCarnet2(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 BOOL CALLBACK vRegPersona(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     hWndPersona = hWnd;
-    SYSTEMTIME nacimiento;
-    char identif[500], pertel[10];
+    SYSTEMTIME nacimiento{};
+    char identif[500]{}, pertel[10];
 
     switch (msg) {
         case WM_INITDIALOG: {
@@ -675,9 +666,10 @@ BOOL CALLBACK vRegPersona(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     GetDlgItemText(hWnd, IDC_SEXP, (LPWSTR)s2ws(registrp->persex).c_str(), 10);
                     GetDlgItemText(hWnd, IDC_GRUOCUP, (LPWSTR)s2ws(registrp->pergrupocup).c_str(), 20);
                     GetDlgItemText(hWnd, IDC_PERRIEP, (LPWSTR)s2ws(registrp->perfriesgo).c_str(), 20);
-                    strcpy_s(registrp->fecnam.dia, "");
-                    strcpy_s(registrp->fecnam.mes, "");
-                    strcpy_s(registrp->fecnam.ano, "");
+                    SendDlgItemMessage(hWnd, IDC_DATETIMEPICKERP, DTM_GETSYSTEMTIME, 0, (LPARAM)&nacimiento);
+                    sprintf_s(registrp->fecnam.dia, "", nacimiento.wDay);
+                    sprintf_s(registrp->fecnam.mes, "", nacimiento.wMonth);
+                    sprintf_s(registrp->fecnam.ano, "", nacimiento.wYear);
                     regPersona(registrp);
 
                     delete registrp;
@@ -695,7 +687,7 @@ BOOL CALLBACK vRegPersona(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
  
                     ofn.lStructSize = sizeof(ofn);
                     ofn.hwndOwner = hWnd;
-                    ofn.lpstrFilter = "ALL\0 * .*\0Bitmaps\0 * .bmp\0";
+                    ofn.lpstrFilter = L"ALL\0 * .*\0Bitmaps\0 * .bmp\0";
                     ofn.lpstrFile = (LPWSTR)s2ws(zFile).c_str();
                     ofn.lpstrFile[0] = '\0';
                     ofn.nMaxFile = sizeof(zFile);
@@ -843,7 +835,7 @@ void menu1(WPARAM wParam, HWND hWnd) {
 }
 
 void regCarnet(CARNET* nuevo) {
-    if (inicic = nullptr) {
+    if (inicic == nullptr) {
         inicic = new CARNET;
         auxc = inicic;
 
@@ -886,7 +878,7 @@ void regCarnet(CARNET* nuevo) {
 }
 
 void delCarnet(CARNET* auxc) {
-    char cardel[100];
+    char cardel[100]{};
     auxc = inicic;
 
     if (auxc == nullptr)
@@ -937,14 +929,15 @@ void delCarnet(CARNET* auxc) {
 }
 
 void modCarnet(CARNET* carnetmod) {
-    char krnwtmod[100];
     auxc = inicic;
+    WCHAR krnetmod[100] = { 0 };
+    char krnwtmod[100] {};
 
     if (auxc == nullptr) {
         MessageBox(hWndSearCarnet, L"No hay carnetes registrados todavia. Anada un nuevo carnet.", L"AVISO", MB_OK | MB_ICONWARNING);
     }
     else {
-        while (auxp != nullptr && strcmp(auxc->persocurp, krnwtmod) != 0) {
+        while (auxc != nullptr && strcmp(auxc->persocurp, krnwtmod) != 0) {
             auxc = auxc->sig;
         }
         if (auxc == nullptr) {
@@ -952,15 +945,15 @@ void modCarnet(CARNET* carnetmod) {
         }
         else {
 
-            auxc->numcarnet = krnwtmod->numcarnet;
-            strcpy(auxc->persocurp, krnwtmod->persocurp);
-            strcpy(auxc->vacuna, krnwtmod->vacuna);
-            strcpy(auxc->dosis, krnwtmod->dosis);
-            strcpy(auxc->fechadosis.dia, krnwtmod->fechadosis.dia);
-            strcpy(auxc->fechadosis.mes, krnwtmod->fechadosis.mes);
-            strcpy(auxc->fechadosis.ano, krnwtmod->fechadosis.ano);
-            strcpy(auxc->lote, krnwtmod->lote);
-            strcpy(auxc->vacunacenter, krnwtmod->vacunacenter);
+            auxc->numcarnet = carnetmod->numcarnet;
+            strcpy_s(auxc->persocurp, carnetmod->persocurp);
+            strcpy_s(auxc->vacuna, carnetmod->vacuna);
+            strcpy_s(auxc->dosis, carnetmod->dosis);
+            strcpy_s(auxc->fechadosis.dia, carnetmod->fechadosis.dia);
+            strcpy_s(auxc->fechadosis.mes, carnetmod->fechadosis.mes);
+            strcpy_s(auxc->fechadosis.ano, carnetmod->fechadosis.ano);
+            strcpy_s(auxc->lote, carnetmod->lote);
+            strcpy_s(auxc->vacunacenter, carnetmod->vacunacenter);
 
             MessageBox(hWndSearCarnet, L"Carnet modificado", L"AVISO", MB_OK | MB_ICONINFORMATION);
         }
