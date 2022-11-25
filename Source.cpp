@@ -28,7 +28,6 @@ struct CARNET {
 
 CARNET* inicic, * auxc, * finc, * krnet = nullptr;
 CARNET* registrc = nullptr;
-dosdate completa;
 SYSTEMTIME date;
 
 struct USER {
